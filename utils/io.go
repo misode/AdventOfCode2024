@@ -3,6 +3,7 @@ package utils
 import (
 	"log"
 	"os"
+	"strconv"
 	"strings"
 )
 
@@ -23,4 +24,18 @@ func ReadInput(name string) []string {
 	}
 
 	return lines
+}
+
+func SplitInts(source string) []int {
+	parts := strings.Split(source, " ")
+	ints := make([]int, len(parts))
+	i := 0
+	for _, part := range parts {
+		num, err := strconv.Atoi(part)
+		if err == nil {
+			ints[i] = num
+			i += 1
+		}
+	}
+	return ints[:i]
 }

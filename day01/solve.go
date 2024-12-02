@@ -3,8 +3,6 @@ package day01
 import (
 	"fmt"
 	"sort"
-	"strconv"
-	"strings"
 
 	"misode.dev/aoc-2024/utils"
 )
@@ -17,9 +15,9 @@ func Solve() {
 	left := make([]int, len(lines))
 	right := make([]int, len(lines))
 	for i, line := range lines {
-		parts := strings.Split(line, "   ")
-		left[i], _ = strconv.Atoi(parts[0])
-		right[i], _ = strconv.Atoi(parts[1])
+		parts := utils.SplitInts(line)
+		left[i] = parts[0]
+		right[i] = parts[1]
 	}
 
 	sort.IntSlice(left).Sort()

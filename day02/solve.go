@@ -2,8 +2,6 @@ package day02
 
 import (
 	"fmt"
-	"strconv"
-	"strings"
 
 	"misode.dev/aoc-2024/utils"
 )
@@ -17,11 +15,8 @@ func Solve() {
 	part2 := 0
 
 	for _, line := range lines {
-		parts := strings.Split(line, " ")
-		levels := make([]int, len(parts))
-		for i, part := range parts {
-			levels[i], _ = strconv.Atoi(part)
-		}
+		levels := utils.SplitInts(line)
+
 		if CheckReport(levels) {
 			part1 += 1
 			part2 += 1
