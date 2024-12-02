@@ -6,10 +6,10 @@ import (
 	"misode.dev/aoc-2024/utils"
 )
 
-func Solve() {
+func Solve() (int, int) {
 	fmt.Println("=== Day 02 ===")
 
-	lines := utils.ReadInput("day02/in.txt")
+	lines := utils.ReadInput("in.txt")
 
 	part1 := 0
 	part2 := 0
@@ -35,6 +35,8 @@ func Solve() {
 
 	fmt.Println(part1)
 	fmt.Println(part2)
+
+	return part1, part2
 }
 
 func CheckReport(levels []int) bool {

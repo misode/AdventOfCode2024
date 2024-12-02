@@ -3,12 +3,18 @@ package utils
 import (
 	"log"
 	"os"
+	"path/filepath"
+	"runtime"
 	"strconv"
 	"strings"
 )
 
 func ReadInput(name string) []string {
-	content, err := os.ReadFile(name)
+	_, currentFile, _, _ := runtime.Caller(1)
+	currentDir := filepath.Dir(currentFile)
+	inputFilePath := filepath.Join(currentDir, name)
+
+	content, err := os.ReadFile(inputFilePath)
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -7,10 +7,10 @@ import (
 	"misode.dev/aoc-2024/utils"
 )
 
-func Solve() {
+func Solve() (int, int) {
 	fmt.Println("=== Day 01 ===")
 
-	lines := utils.ReadInput("day01/in.txt")
+	lines := utils.ReadInput("in.txt")
 
 	left := make([]int, len(lines))
 	right := make([]int, len(lines))
@@ -46,4 +46,6 @@ func Solve() {
 		part2 += num * count
 	}
 	fmt.Println(part2)
+
+	return part1, part2
 }
