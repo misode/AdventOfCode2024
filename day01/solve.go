@@ -35,15 +35,11 @@ func Solve() (int, int) {
 	}
 	fmt.Println(part1)
 
-	counts := make(map[int]int)
-	for _, num := range right {
-		counts[num] = counts[num] + 1
-	}
+	counts := utils.Counter(right)
 
 	part2 := 0
 	for _, num := range left {
-		count := counts[num]
-		part2 += num * count
+		part2 += num * counts[num]
 	}
 	fmt.Println(part2)
 

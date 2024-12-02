@@ -45,3 +45,11 @@ func SplitInts(source string) []int {
 	}
 	return ints[:i]
 }
+
+func Counter[K comparable](values []K) map[K]int {
+	counts := make(map[K]int)
+	for _, val := range values {
+		counts[val] = counts[val] + 1
+	}
+	return counts
+}
