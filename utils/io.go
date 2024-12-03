@@ -4,6 +4,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"regexp"
 	"runtime"
 	"strconv"
 	"strings"
@@ -52,4 +53,20 @@ func Counter[K comparable](values []K) map[K]int {
 		counts[val] = counts[val] + 1
 	}
 	return counts
+}
+
+func StrToInt(value string) int {
+	num, err := strconv.Atoi(value)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return num
+}
+
+func FindMatches(pattern string, source string) [][]string {
+	regex, err := regexp.Compile(pattern)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return regex.FindAllStringSubmatch(source, -1)
 }
