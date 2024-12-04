@@ -18,31 +18,31 @@ func Solve() (int, int) {
 	for r := 0; r < N; r++ {
 		for c := 0; c < N; c++ {
 			// Horizontal
-			if c+3 < N && G[r][c] == 'X' && G[r][c+1] == 'M' && G[r][c+2] == 'A' && G[r][c+3] == 'S' {
+			if utils.MatchSubGrid(G, r, c, "XMAS") {
 				part1 += 1
 			}
-			if c+3 < N && G[r][c+3] == 'X' && G[r][c+2] == 'M' && G[r][c+1] == 'A' && G[r][c+0] == 'S' {
+			if utils.MatchSubGrid(G, r, c, "SAMX") {
 				part1 += 1
 			}
 			// Vertical
-			if r+3 < N && G[r][c] == 'X' && G[r+1][c] == 'M' && G[r+2][c] == 'A' && G[r+3][c] == 'S' {
+			if utils.MatchSubGrid(G, r, c, "X,M,A,S") {
 				part1 += 1
 			}
-			if r+3 < N && G[r+3][c] == 'X' && G[r+2][c] == 'M' && G[r+1][c] == 'A' && G[r][c] == 'S' {
+			if utils.MatchSubGrid(G, r, c, "S,A,M,X") {
 				part1 += 1
 			}
 			// Primary diagonal
-			if r+3 < N && c+3 < N && G[r][c] == 'X' && G[r+1][c+1] == 'M' && G[r+2][c+2] == 'A' && G[r+3][c+3] == 'S' {
+			if utils.MatchSubGrid(G, r, c, "X   , M  ,  A ,   S") {
 				part1 += 1
 			}
-			if r+3 < N && c+3 < N && G[r+3][c+3] == 'X' && G[r+2][c+2] == 'M' && G[r+1][c+1] == 'A' && G[r][c] == 'S' {
+			if utils.MatchSubGrid(G, r, c, "S   , A  ,  M ,   X") {
 				part1 += 1
 			}
 			// Secondary diagonal
-			if r+3 < N && c+3 < N && G[r][c+3] == 'X' && G[r+1][c+2] == 'M' && G[r+2][c+1] == 'A' && G[r+3][c] == 'S' {
+			if utils.MatchSubGrid(G, r, c, "   X,  M , A  ,S   ") {
 				part1 += 1
 			}
-			if r+3 < N && c+3 < N && G[r+3][c] == 'X' && G[r+2][c+1] == 'M' && G[r+1][c+2] == 'A' && G[r][c+3] == 'S' {
+			if utils.MatchSubGrid(G, r, c, "   S,  A , M  ,X   ") {
 				part1 += 1
 			}
 		}

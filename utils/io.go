@@ -84,3 +84,19 @@ func AssertEqual[T comparable](a T, b T) {
 		log.Fatal("AssertEqual")
 	}
 }
+
+func MatchSubGrid(grid [][]rune, r int, c int, search string) bool {
+	subgrid := MakeGrid(strings.Split(search, ","))
+
+	if r+len(subgrid) > len(grid) || c+len(subgrid[0]) > len(grid[0]) {
+		return false
+	}
+	for dr := 0; dr < len(subgrid); dr++ {
+		for dc := 0; dc < len(subgrid[0]); dc++ {
+			if subgrid[dr][dc] != ' ' && grid[r+dr][c+dc] != subgrid[dr][dc] {
+				return false
+			}
+		}
+	}
+	return true
+}
