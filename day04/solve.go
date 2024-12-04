@@ -11,54 +11,32 @@ func Solve() (int, int) {
 
 	lines := utils.ReadInput("in.txt")
 	G := utils.MakeGrid(lines)
-	N := len(G)
-	utils.AssertEqual(N, len(G[0]))
 
 	part1 := 0
-	for r := 0; r < N; r++ {
-		for c := 0; c < N; c++ {
-			// Horizontal
-			if utils.MatchSubGrid(G, r, c, "XMAS") {
-				part1 += 1
-			}
-			if utils.MatchSubGrid(G, r, c, "SAMX") {
-				part1 += 1
-			}
-			// Vertical
-			if utils.MatchSubGrid(G, r, c, "X,M,A,S") {
-				part1 += 1
-			}
-			if utils.MatchSubGrid(G, r, c, "S,A,M,X") {
-				part1 += 1
-			}
-			// Primary diagonal
-			if utils.MatchSubGrid(G, r, c, "X   , M  ,  A ,   S") {
-				part1 += 1
-			}
-			if utils.MatchSubGrid(G, r, c, "S   , A  ,  M ,   X") {
-				part1 += 1
-			}
-			// Secondary diagonal
-			if utils.MatchSubGrid(G, r, c, "   X,  M , A  ,S   ") {
-				part1 += 1
-			}
-			if utils.MatchSubGrid(G, r, c, "   S,  A , M  ,X   ") {
-				part1 += 1
-			}
+	G.ForEach(func(r int, c int) {
+		if G.MatchSub(r, c, "XMAS") || G.MatchSub(r, c, "SAMX") {
+			part1 += 1
 		}
-	}
+		if G.MatchSub(r, c, "X,M,A,S") || G.MatchSub(r, c, "S,A,M,X") {
+			part1 += 1
+		}
+		if G.MatchSub(r, c, "X   , M  ,  A ,   S") || G.MatchSub(r, c, "S   , A  ,  M ,   X") {
+			part1 += 1
+		}
+		if G.MatchSub(r, c, "   X,  M , A  ,S   ") || G.MatchSub(r, c, "   S,  A , M  ,X   ") {
+			part1 += 1
+		}
+	})
 	fmt.Println(part1)
 
 	part2 := 0
-	for r := 0; r+2 < N; r++ {
-		for c := 0; c+2 < N; c++ {
-			primary := (G[r][c] == 'M' && G[r+2][c+2] == 'S') || (G[r+2][c+2] == 'M' && G[r][c] == 'S')
-			secondary := (G[r][c+2] == 'M' && G[r+2][c] == 'S') || (G[r+2][c] == 'M' && G[r][c+2] == 'S')
-			if G[r+1][c+1] == 'A' && primary && secondary {
-				part2 += 1
-			}
+	G.ForEach(func(r int, c int) {
+		primary := (G.Is(r, c, 'M') && G.Is(r+2, c+2, 'S')) || (G.Is(r+2, c+2, 'M') && G.Is(r, c, 'S'))
+		secondary := (G.Is(r, c+2, 'M') && G.Is(r+2, c, 'S')) || (G.Is(r+2, c, 'M') && G.Is(r, c+2, 'S'))
+		if G.Is(r+1, c+1, 'A') && primary && secondary {
+			part2 += 1
 		}
-	}
+	})
 	fmt.Println(part2)
 
 	return part1, part2
