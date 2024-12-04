@@ -7,9 +7,9 @@ type Grid struct {
 }
 
 func MakeGrid(lines []string) Grid {
-	data := make([][]rune, 0, len(lines))
-	for _, line := range lines {
-		data = append(data, []rune(line))
+	data := make([][]rune, len(lines))
+	for i, line := range lines {
+		data[i] = []rune(line)
 	}
 	return Grid{data}
 }
@@ -20,6 +20,27 @@ func (g *Grid) Height() int {
 
 func (g *Grid) Width() int {
 	return len(g.data[0])
+}
+
+func (g *Grid) Transpose() Grid {
+	data := make([][]rune, g.Width())
+	for i := range data {
+		data[i] = make([]rune, g.Height())
+	}
+	for r, row := range g.data {
+		for c, val := range row {
+			data[c][r] = val
+		}
+	}
+	return Grid{data}
+}
+
+func (g *Grid) ToLines() []string {
+	lines := make([]string, g.Height())
+	for i, row := range g.data {
+		lines[i] = string(row)
+	}
+	return lines
 }
 
 func (g *Grid) Is(r int, c int, check rune) bool {
