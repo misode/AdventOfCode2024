@@ -8,6 +8,7 @@ import (
 	"runtime"
 	"strconv"
 	"strings"
+	"unicode/utf8"
 )
 
 func ReadInput(name string) []string {
@@ -69,4 +70,15 @@ func FindMatches(pattern string, source string) [][]string {
 		log.Fatal(err)
 	}
 	return regex.FindAllStringSubmatch(source, -1)
+}
+
+func ReverseStr(s string) string {
+	size := len(s)
+	buf := make([]byte, size)
+	for start := 0; start < size; {
+		r, n := utf8.DecodeRuneInString(s[start:])
+		start += n
+		utf8.EncodeRune(buf[size-start:], r)
+	}
+	return string(buf)
 }

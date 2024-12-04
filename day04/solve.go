@@ -14,16 +14,16 @@ func Solve() (int, int) {
 
 	part1 := 0
 	G.ForEach(func(r int, c int) {
-		if G.MatchSub(r, c, "XMAS") || G.MatchSub(r, c, "SAMX") {
+		if G.MatchSym(r, c, "XMAS") {
 			part1 += 1
 		}
-		if G.MatchSub(r, c, "X,M,A,S") || G.MatchSub(r, c, "S,A,M,X") {
+		if G.MatchSym(r, c, "X,M,A,S") {
 			part1 += 1
 		}
-		if G.MatchSub(r, c, "X   , M  ,  A ,   S") || G.MatchSub(r, c, "S   , A  ,  M ,   X") {
+		if G.MatchSym(r, c, "X   , M  ,  A ,   S") {
 			part1 += 1
 		}
-		if G.MatchSub(r, c, "   X,  M , A  ,S   ") || G.MatchSub(r, c, "   S,  A , M  ,X   ") {
+		if G.MatchSym(r, c, "   X,  M , A  ,S   ") {
 			part1 += 1
 		}
 	})
@@ -31,9 +31,7 @@ func Solve() (int, int) {
 
 	part2 := 0
 	G.ForEach(func(r int, c int) {
-		primary := (G.Is(r, c, 'M') && G.Is(r+2, c+2, 'S')) || (G.Is(r+2, c+2, 'M') && G.Is(r, c, 'S'))
-		secondary := (G.Is(r, c+2, 'M') && G.Is(r+2, c, 'S')) || (G.Is(r+2, c, 'M') && G.Is(r, c+2, 'S'))
-		if G.Is(r+1, c+1, 'A') && primary && secondary {
+		if G.MatchSym(r, c, "M  , A ,  S") && G.MatchSym(r, c, "  M, A ,S  ") {
 			part2 += 1
 		}
 	})

@@ -26,7 +26,7 @@ func (g *Grid) Is(r int, c int, check rune) bool {
 	return r < g.Height() && c < g.Width() && g.data[r][c] == check
 }
 
-func (g *Grid) MatchSub(r int, c int, search string) bool {
+func (g *Grid) Match(r int, c int, search string) bool {
 	subgrid := MakeGrid(strings.Split(search, ","))
 
 	for dr := 0; dr < subgrid.Height(); dr++ {
@@ -37,6 +37,10 @@ func (g *Grid) MatchSub(r int, c int, search string) bool {
 		}
 	}
 	return true
+}
+
+func (g *Grid) MatchSym(r int, c int, search string) bool {
+	return g.Match(r, c, search) || g.Match(r, c, ReverseStr(search))
 }
 
 func (g *Grid) ForEach(fn func(r int, c int)) {
