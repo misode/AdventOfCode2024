@@ -70,3 +70,17 @@ func FindMatches(pattern string, source string) [][]string {
 	}
 	return regex.FindAllStringSubmatch(source, -1)
 }
+
+func MakeGrid(lines []string) [][]rune {
+	grid := make([][]rune, 0, len(lines))
+	for _, line := range lines {
+		grid = append(grid, []rune(line))
+	}
+	return grid
+}
+
+func AssertEqual[T comparable](a T, b T) {
+	if a != b {
+		log.Fatal("AssertEqual")
+	}
+}
