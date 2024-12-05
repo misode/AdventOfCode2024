@@ -25,10 +25,11 @@ func ReadInput(name string) []string {
 
 	for _, line := range strings.Split(string(content), "\n") {
 		line, _ := strings.CutSuffix(line, "\r")
-		if len(line) == 0 {
-			continue
-		}
 		lines = append(lines, line)
+	}
+
+	if len(lines[len(lines)-1]) == 0 {
+		lines = lines[:len(lines)-1]
 	}
 
 	return lines
