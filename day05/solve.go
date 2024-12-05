@@ -38,14 +38,7 @@ func Solve() (int, int) {
 	part2 := 0
 	for _, update := range updates {
 		seq := utils.TopoSort(order, update)
-		wasOrdered := true
-		for i, n := range update {
-			if seq[i] != n {
-				wasOrdered = false
-				break
-			}
-		}
-		if wasOrdered {
+		if utils.SliceEqual(update, seq) {
 			part1 += seq[len(seq)/2]
 		} else {
 			part2 += seq[len(seq)/2]

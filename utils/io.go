@@ -83,3 +83,15 @@ func ReverseStr(s string) string {
 	}
 	return string(buf)
 }
+
+func SliceEqual[T comparable](a []T, b []T) bool {
+	if len(a) != len(b) {
+		return false
+	}
+	for i, val := range a {
+		if val != b[i] {
+			return false
+		}
+	}
+	return true
+}
