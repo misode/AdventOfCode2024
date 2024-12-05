@@ -35,8 +35,27 @@ func ReadInput(name string) []string {
 	return lines
 }
 
-func SplitInts(source string) []int {
-	parts := strings.Split(source, " ")
+func SplitLinesOnEmpty(lines []string) [][]string {
+	groups := make([][]string, 0)
+	cur := make([]string, 0)
+	for _, line := range lines {
+		if len(line) == 0 {
+			if len(cur) > 0 {
+				groups = append(groups, cur)
+			}
+			cur = make([]string, 0)
+		} else {
+			cur = append(cur, line)
+		}
+	}
+	if len(cur) > 0 {
+		groups = append(groups, cur)
+	}
+	return groups
+}
+
+func SplitInts(source string, sep string) []int {
+	parts := strings.Split(source, sep)
 	ints := make([]int, len(parts))
 	i := 0
 	for _, part := range parts {

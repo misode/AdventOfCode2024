@@ -15,7 +15,7 @@ func Solve() (int, int) {
 	part2 := 0
 
 	for _, line := range lines {
-		levels := utils.SplitInts(line)
+		levels := utils.SplitInts(line, " ")
 
 		if CheckReport(levels) {
 			part1 += 1

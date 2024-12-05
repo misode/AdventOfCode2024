@@ -2,7 +2,6 @@ package day05
 
 import (
 	"fmt"
-	"strings"
 
 	"misode.dev/aoc-2024/utils"
 )
@@ -11,33 +10,24 @@ func Solve() (int, int) {
 	fmt.Println("=== Day 05 ===")
 
 	lines := utils.ReadInput("in.txt")
+	groups := utils.SplitLinesOnEmpty(lines)
 
-	order := make(map[int][]int)
+	graph := make(map[int][]int)
+	for _, line := range groups[0] {
+		nums := utils.SplitInts(line, "|")
+		graph[nums[0]] = append(graph[nums[0]], nums[1])
+	}
+
 	updates := make([][]int, 0)
-	first := true
-
-	for _, line := range lines {
-		if first {
-			if len(line) == 0 {
-				first = false
-				continue
-			}
-			parts := strings.Split(line, "|")
-			order[utils.StrToInt(parts[0])] = append(order[utils.StrToInt(parts[0])], utils.StrToInt(parts[1]))
-		} else {
-			parts := strings.Split(line, ",")
-			update := make([]int, len(parts))
-			for i, part := range parts {
-				update[i] = utils.StrToInt(part)
-			}
-			updates = append(updates, update)
-		}
+	for _, line := range groups[1] {
+		update := utils.SplitInts(line, ",")
+		updates = append(updates, update)
 	}
 
 	part1 := 0
 	part2 := 0
 	for _, update := range updates {
-		seq := utils.TopoSort(order, update)
+		seq := utils.TopoSort(graph, update)
 		if utils.SliceEqual(update, seq) {
 			part1 += seq[len(seq)/2]
 		} else {

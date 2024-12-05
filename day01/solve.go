@@ -15,7 +15,7 @@ func Solve() (int, int) {
 	left := make([]int, len(lines))
 	right := make([]int, len(lines))
 	for i, line := range lines {
-		parts := utils.SplitInts(line)
+		parts := utils.SplitInts(line, " ")
 		left[i] = parts[0]
 		right[i] = parts[1]
 	}

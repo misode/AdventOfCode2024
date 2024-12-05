@@ -7,8 +7,9 @@ import (
 )
 
 func TestSplitInts(t *testing.T) {
-	assert.Equal(t, SplitInts("1 4 2"), []int{1, 4, 2})
-	assert.Equal(t, SplitInts("8 test 3"), []int{8, 3})
+	assert.Equal(t, SplitInts("1 4 2", " "), []int{1, 4, 2})
+	assert.Equal(t, SplitInts("8 test 3", " "), []int{8, 3})
+	assert.Equal(t, SplitInts("8,3", ","), []int{8, 3})
 }
 
 func TestCounter(t *testing.T) {
