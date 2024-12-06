@@ -86,6 +86,17 @@ func (g *Grid) MatchSym(r int, c int, search string) bool {
 	return g.Match(r, c, search) || g.Match(r, c, ReverseStr(search))
 }
 
+func (g *Grid) Find(check rune) (int, int, bool) {
+	for r, row := range g.data {
+		for c, val := range row {
+			if val == check {
+				return r, c, true
+			}
+		}
+	}
+	return 0, 0, false
+}
+
 func (g *Grid) ForEach(fn func(r int, c int)) {
 	for r := 0; r < g.Height(); r++ {
 		for c := 0; c < g.Width(); c++ {
