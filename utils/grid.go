@@ -1,6 +1,9 @@
 package utils
 
-import "strings"
+import (
+	"fmt"
+	"strings"
+)
 
 type Grid struct {
 	data [][]rune
@@ -43,8 +46,27 @@ func (g *Grid) ToLines() []string {
 	return lines
 }
 
+func (g *Grid) Print() {
+	lines := g.ToLines()
+	for _, line := range lines {
+		fmt.Println(line)
+	}
+}
+
+func (g *Grid) IsInside(r int, c int) bool {
+	return r >= 0 && c >= 0 && r < g.Height() && c < g.Width()
+}
+
 func (g *Grid) Is(r int, c int, check rune) bool {
-	return r < g.Height() && c < g.Width() && g.data[r][c] == check
+	return g.IsInside(r, c) && g.data[r][c] == check
+}
+
+func (g *Grid) Mark(r int, c int, set rune) bool {
+	if g.IsInside(r, c) {
+		g.data[r][c] = set
+		return true
+	}
+	return false
 }
 
 func (g *Grid) Match(r int, c int, search string) bool {
