@@ -2,7 +2,6 @@ package day07
 
 import (
 	"fmt"
-	"slices"
 	"strconv"
 	"strings"
 
@@ -20,10 +19,10 @@ func Solve() (int, int) {
 		parts := strings.Split(line, ": ")
 		result := utils.StrToInt(parts[0])
 		nums := utils.SplitInts(parts[1], " ")
-		if slices.Contains(Solutions(nums[0], nums[1:], false), result) {
+		if Solution(nums[0], nums[1:], result, false) {
 			part1 += result
 		}
-		if slices.Contains(Solutions(nums[0], nums[1:], true), result) {
+		if Solution(nums[0], nums[1:], result, true) {
 			part2 += result
 		}
 	}
@@ -33,17 +32,25 @@ func Solve() (int, int) {
 	return int(part1), part2
 }
 
-func Solutions(cur int, nums []int, part2 bool) []int {
+func Solution(cur int, nums []int, result int, part2 bool) bool {
 	if len(nums) == 0 {
-		return []int{cur}
+		return cur == result
+	}
+	if cur > result {
+		return false
 	}
 	next, rest := nums[0], nums[1:]
-	solutions := slices.Concat(
-		Solutions(cur+next, rest, part2),
-		Solutions(cur*next, rest, part2))
+	if Solution(cur+next, rest, result, part2) {
+		return true
+	}
+	if Solution(cur*next, rest, result, part2) {
+		return true
+	}
 	if part2 {
 		concat := utils.StrToInt(strconv.Itoa(cur) + strconv.Itoa(next))
-		solutions = slices.Concat(solutions, Solutions(concat, rest, part2))
+		if Solution(concat, rest, result, part2) {
+			return true
+		}
 	}
-	return solutions
+	return false
 }
