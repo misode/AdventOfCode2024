@@ -12,12 +12,14 @@ import (
 )
 
 func main() {
-	day01.Solve()
-	day02.Solve()
-	day03.Solve()
-	day04.Solve()
-	day05.Solve()
-	day06.Solve()
-	day07.Solve()
+	if false {
+		day01.Solve()
+		day02.Solve()
+		day03.Solve()
+		day04.Solve()
+		day05.Solve()
+		day06.Solve()
+		day07.Solve()
+	}
 	day08.Solve()
 }
