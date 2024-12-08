@@ -69,6 +69,13 @@ func (g *Grid) Mark(r int, c int, set rune) bool {
 	return false
 }
 
+func (g *Grid) Get(r int, c int) (rune, bool) {
+	if g.IsInside(r, c) {
+		return g.data[r][c], true
+	}
+	return rune(0), false
+}
+
 func (g *Grid) Match(r int, c int, search string) bool {
 	subgrid := MakeGrid(strings.Split(search, ","))
 
