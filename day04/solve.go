@@ -13,7 +13,7 @@ func Solve() (int, int) {
 	G := utils.MakeGrid(lines)
 
 	part1 := 0
-	G.ForEach(func(r int, c int) {
+	G.ForEach(func(r int, c int, _ rune) {
 		if G.MatchSym(r, c, "XMAS") {
 			part1 += 1
 		}
@@ -30,7 +30,7 @@ func Solve() (int, int) {
 	fmt.Println(part1)
 
 	part2 := 0
-	G.ForEach(func(r int, c int) {
+	G.ForEach(func(r int, c int, _ rune) {
 		if G.MatchSym(r, c, "M  , A ,  S") && G.MatchSym(r, c, "  M, A ,S  ") {
 			part2 += 1
 		}

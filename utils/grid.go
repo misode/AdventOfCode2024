@@ -104,10 +104,10 @@ func (g *Grid) Find(check rune) (int, int, bool) {
 	return 0, 0, false
 }
 
-func (g *Grid) ForEach(fn func(r int, c int)) {
-	for r := 0; r < g.Height(); r++ {
-		for c := 0; c < g.Width(); c++ {
-			fn(r, c)
+func (g *Grid) ForEach(fn func(r int, c int, val rune)) {
+	for r, row := range g.data {
+		for c, val := range row {
+			fn(r, c, val)
 		}
 	}
 }

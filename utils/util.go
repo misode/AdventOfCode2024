@@ -114,3 +114,11 @@ func SliceEqual[T comparable](a []T, b []T) bool {
 	}
 	return true
 }
+
+func ForCombinations[T any](list []T, fn func(a T, b T)) {
+	for i := 0; i < len(list); i++ {
+		for j := i + 1; j < len(list); j++ {
+			fn(list[i], list[j])
+		}
+	}
+}
