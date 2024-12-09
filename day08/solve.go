@@ -23,23 +23,16 @@ func Solve() (int, int) {
 	antinodes2 := make(map[Point]bool)
 	for _, nodes := range antennas {
 		utils.ForCombinations(nodes, func(p1 Point, p2 Point) {
-			a1 := Point{r: p1.r - (p2.r - p1.r), c: p1.c - (p2.c - p1.c)}
-			if grid.IsInside(a1.r, a1.c) {
-				antinodes1[a1] = true
-			}
-			for grid.IsInside(a1.r, a1.c) {
-				antinodes2[a1] = true
-				a1.r -= (p2.r - p1.r)
-				a1.c -= (p2.c - p1.c)
-			}
-			a2 := Point{r: p2.r - (p1.r - p2.r), c: p2.c - (p1.c - p2.c)}
-			if grid.IsInside(a2.r, a2.c) {
-				antinodes1[a2] = true
-			}
-			for grid.IsInside(a2.r, a2.c) {
-				antinodes2[a2] = true
-				a2.r -= (p1.r - p2.r)
-				a2.c -= (p1.c - p2.c)
+			for _, move := range []Move{MoveFromTo(p1, p2), MoveFromTo(p2, p1)} {
+				move = move.Step()
+				move = move.Step()
+				if grid.IsInside(move.pos.r, move.pos.c) {
+					antinodes1[move.pos] = true
+				}
+				for grid.IsInside(move.pos.r, move.pos.c) {
+					antinodes2[move.pos] = true
+					move = move.Step()
+				}
 			}
 			antinodes2[p1] = true
 			antinodes2[p2] = true
@@ -51,10 +44,28 @@ func Solve() (int, int) {
 	part2 := len(antinodes2)
 	fmt.Println(part2)
 
-	return int(part1), part2
+	return part1, part2
 }
 
 type Point struct {
 	r int
 	c int
+}
+
+type Move struct {
+	pos Point
+	dir Point
+}
+
+func MoveFromTo(from Point, to Point) Move {
+	dir := Point{r: to.r - from.r, c: to.c - from.c}
+	return Move{pos: from, dir: dir}
+}
+
+func (m *Move) To() Point {
+	return Point{r: m.pos.r + m.dir.r, c: m.pos.c + m.dir.c}
+}
+
+func (m *Move) Step() Move {
+	return Move{pos: m.To(), dir: m.dir}
 }

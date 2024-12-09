@@ -29,7 +29,7 @@ func Solve() (int, int) {
 	fmt.Println(part1)
 	fmt.Println(part2)
 
-	return int(part1), part2
+	return part1, part2
 }
 
 func Solution(cur int, nums []int, result int, part2 bool) bool {
