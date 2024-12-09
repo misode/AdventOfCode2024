@@ -11,12 +11,10 @@ func Solve() (int, int) {
 	fmt.Println("=== Day 09 ===")
 
 	lines := utils.ReadInput("in.txt")
-	line := lines[0]
 
 	orig := make([]int, 0)
-	for i, c := range strings.Split(line, "") {
-		n := utils.StrToInt(c)
-		for j := 0; j < n; j++ {
+	for i, c := range strings.Split(lines[0], "") {
+		for range utils.StrToInt(c) {
 			if i%2 == 0 {
 				orig = append(orig, i/2)
 			} else {
@@ -25,27 +23,21 @@ func Solve() (int, int) {
 		}
 	}
 	disk := make([]int, len(orig))
+
 	copy(disk, orig)
-
-	p := 0
-	for disk[p] != -1 {
-		p += 1
+	firstFree := 0
+	for disk[firstFree] != -1 {
+		firstFree += 1
 	}
-
-	for i := len(disk) - 1; i >= p; i-- {
-		disk[p] = disk[i]
+	for i := len(disk) - 1; i >= firstFree; i-- {
+		disk[firstFree] = disk[i]
 		disk[i] = -1
-		for disk[p] != -1 {
-			p += 1
+		for disk[firstFree] != -1 {
+			firstFree += 1
 		}
 	}
 
-	part1 := 0
-	for i, n := range disk {
-		if n != -1 {
-			part1 += i * n
-		}
-	}
+	part1 := ComputeChecksum(disk)
 	fmt.Println(part1)
 
 	copy(disk, orig)
@@ -54,36 +46,41 @@ func Solve() (int, int) {
 		if n == -1 {
 			continue
 		}
-		j := i
-		for j-1 > 0 && disk[j-1] == n {
-			j -= 1
+		src := i
+		for src-1 > 0 && disk[src-1] == n {
+			src -= 1
 		}
-		size := i - j + 1
-		s := 0
-		for k := 0; k < j; k++ {
-			if disk[k] == -1 {
-				s += 1
-				if s >= size {
-					for l := 0; l < size; l++ {
-						disk[k-s+1+l] = n
-						disk[j+l] = -1
+		chunkSize := i - src + 1
+		foundsize := 0
+		for dst := 0; dst < src; dst++ {
+			if disk[dst] == -1 {
+				foundsize += 1
+				if foundsize == chunkSize {
+					for j := range chunkSize {
+						disk[dst-chunkSize+1+j] = n
+						disk[src+j] = -1
 					}
 					break
 				}
 			} else {
-				s = 0
+				foundsize = 0
 			}
 		}
-		i = j
+		i = src
 	}
 
-	part2 := 0
-	for i, n := range disk {
-		if n != -1 {
-			part2 += i * n
-		}
-	}
+	part2 := ComputeChecksum(disk)
 	fmt.Println(part2)
 
 	return part1, part2
+}
+
+func ComputeChecksum(disk []int) int {
+	result := 0
+	for i, n := range disk {
+		if n != -1 {
+			result += i * n
+		}
+	}
+	return result
 }
