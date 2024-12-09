@@ -1,13 +1,11 @@
 package day06
 
 import (
-	"fmt"
-
 	"misode.dev/aoc-2024/utils"
 )
 
 func Solve() (int, int) {
-	fmt.Println("=== Day 06 ===")
+	timer := utils.StartDay(6)
 
 	lines := utils.ReadInput("in.txt")
 	grid := utils.MakeGrid(lines)
@@ -16,7 +14,7 @@ func Solve() (int, int) {
 
 	path, _ := Simulate(grid, guardR, guardC, 0)
 	part1 := len(path)
-	fmt.Println(part1)
+	timer.Part1(part1)
 
 	part2 := 0
 	for point := range path {
@@ -30,7 +28,7 @@ func Solve() (int, int) {
 			part2 += 1
 		}
 	}
-	fmt.Println(part2)
+	timer.Part2(part2)
 
 	return part1, part2
 }

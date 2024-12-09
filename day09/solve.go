@@ -1,14 +1,13 @@
 package day09
 
 import (
-	"fmt"
 	"strings"
 
 	"misode.dev/aoc-2024/utils"
 )
 
 func Solve() (int, int) {
-	fmt.Println("=== Day 09 ===")
+	timer := utils.StartDay(9)
 
 	lines := utils.ReadInput("in.txt")
 
@@ -23,6 +22,7 @@ func Solve() (int, int) {
 		}
 	}
 	disk := make([]int, len(orig))
+	timer.Parsed()
 
 	copy(disk, orig)
 	firstFree := 0
@@ -38,7 +38,7 @@ func Solve() (int, int) {
 	}
 
 	part1 := ComputeChecksum(disk)
-	fmt.Println(part1)
+	timer.Part1(part1)
 
 	copy(disk, orig)
 	for i := len(disk) - 1; i > 0; i-- {
@@ -70,7 +70,7 @@ func Solve() (int, int) {
 	}
 
 	part2 := ComputeChecksum(disk)
-	fmt.Println(part2)
+	timer.Part2(part2)
 
 	return part1, part2
 }

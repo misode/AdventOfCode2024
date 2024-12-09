@@ -1,7 +1,6 @@
 package day07
 
 import (
-	"fmt"
 	"strconv"
 	"strings"
 
@@ -9,7 +8,7 @@ import (
 )
 
 func Solve() (int, int) {
-	fmt.Println("=== Day 07 ===")
+	timer := utils.StartDay(7)
 
 	lines := utils.ReadInput("in.txt")
 
@@ -26,8 +25,7 @@ func Solve() (int, int) {
 			part2 += result
 		}
 	}
-	fmt.Println(part1)
-	fmt.Println(part2)
+	timer.Parts(part1, part2)
 
 	return part1, part2
 }

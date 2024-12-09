@@ -1,14 +1,13 @@
 package day03
 
 import (
-	"fmt"
 	"strings"
 
 	"misode.dev/aoc-2024/utils"
 )
 
 func Solve() (int, int) {
-	fmt.Println("=== Day 03 ===")
+	timer := utils.StartDay(3)
 
 	lines := utils.ReadInput("in.txt")
 	memory := strings.Join(lines, "")
@@ -17,7 +16,7 @@ func Solve() (int, int) {
 	for _, match := range utils.FindMatches(`mul\((\d{1,3}),(\d{1,3})\)`, memory) {
 		part1 += utils.StrToInt(match[1]) * utils.StrToInt(match[2])
 	}
-	fmt.Println(part1)
+	timer.Part1(part1)
 
 	part2 := 0
 	enabled := true
@@ -30,7 +29,7 @@ func Solve() (int, int) {
 			part2 += utils.StrToInt(match[1]) * utils.StrToInt(match[2])
 		}
 	}
-	fmt.Println(part2)
+	timer.Part2(part2)
 
 	return part1, part2
 }

@@ -1,14 +1,13 @@
 package day01
 
 import (
-	"fmt"
 	"sort"
 
 	"misode.dev/aoc-2024/utils"
 )
 
 func Solve() (int, int) {
-	fmt.Println("=== Day 01 ===")
+	timer := utils.StartDay(1)
 
 	lines := utils.ReadInput("in.txt")
 
@@ -19,6 +18,7 @@ func Solve() (int, int) {
 		left[i] = parts[0]
 		right[i] = parts[1]
 	}
+	timer.Parsed()
 
 	sort.IntSlice(left).Sort()
 	sort.IntSlice(right).Sort()
@@ -33,7 +33,7 @@ func Solve() (int, int) {
 		}
 		part1 += diff
 	}
-	fmt.Println(part1)
+	timer.Part1(part1)
 
 	counts := utils.Counter(right)
 
@@ -41,7 +41,7 @@ func Solve() (int, int) {
 	for _, num := range left {
 		part2 += num * counts[num]
 	}
-	fmt.Println(part2)
+	timer.Part2(part2)
 
 	return part1, part2
 }

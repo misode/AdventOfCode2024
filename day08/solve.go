@@ -1,13 +1,11 @@
 package day08
 
 import (
-	"fmt"
-
 	"misode.dev/aoc-2024/utils"
 )
 
 func Solve() (int, int) {
-	fmt.Println("=== Day 08 ===")
+	timer := utils.StartDay(8)
 
 	lines := utils.ReadInput("in.txt")
 	grid := utils.MakeGrid(lines)
@@ -39,10 +37,8 @@ func Solve() (int, int) {
 		})
 	}
 	part1 := len(antinodes1)
-	fmt.Println(part1)
-
 	part2 := len(antinodes2)
-	fmt.Println(part2)
+	timer.Parts(part1, part2)
 
 	return part1, part2
 }

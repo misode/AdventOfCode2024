@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"path/filepath"
@@ -8,6 +9,7 @@ import (
 	"runtime"
 	"strconv"
 	"strings"
+	"time"
 	"unicode/utf8"
 )
 
@@ -33,6 +35,61 @@ func ReadInput(name string) []string {
 	}
 
 	return lines
+}
+
+type DayTimer struct {
+	start *time.Time
+	parse *time.Time
+	part1 *time.Time
+	part2 *time.Time
+}
+
+func (t *DayTimer) getPrev() time.Time {
+	if t.part2 != nil {
+		return *t.part2
+	} else if t.part1 != nil {
+		return *t.part1
+	} else if t.parse != nil {
+		return *t.parse
+	} else if t.start != nil {
+		return *t.start
+	} else {
+		return time.Now()
+	}
+}
+
+func StartDay(day int) DayTimer {
+	fmt.Printf("=== Day %02d ===\n", day)
+	now := time.Now()
+	return DayTimer{start: &now, parse: nil, part1: nil, part2: nil}
+}
+
+func (t *DayTimer) Parsed() {
+	now := time.Now()
+	t.parse = &now
+}
+
+func (t *DayTimer) Part1(val any) {
+	now := time.Now()
+	diff := now.Sub(t.getPrev())
+	t.part1 = &now
+	fmt.Printf(" %v\t\t(%v)\n", val, diff)
+}
+
+func (t *DayTimer) Part2(val any) {
+	now := time.Now()
+	diff := now.Sub(t.getPrev())
+	t.part2 = &now
+	fmt.Printf(" %v\t\t(%v)\n", val, diff)
+}
+
+func (t *DayTimer) Parts(val1 any, val2 any) {
+	now := time.Now()
+	diff := now.Sub(t.getPrev())
+	t.part1 = &now
+	t.part2 = &now
+	fmt.Printf(" %v\n", val1)
+	fmt.Printf(" %v\t\t(%v)\n", val2, diff)
 }
 
 func SplitLinesOnEmpty(lines []string) [][]string {

@@ -1,22 +1,18 @@
 package day02
 
 import (
-	"fmt"
-
 	"misode.dev/aoc-2024/utils"
 )
 
 func Solve() (int, int) {
-	fmt.Println("=== Day 02 ===")
+	timer := utils.StartDay(2)
 
 	lines := utils.ReadInput("in.txt")
 
 	part1 := 0
 	part2 := 0
-
 	for _, line := range lines {
 		levels := utils.SplitInts(line, " ")
-
 		if CheckReport(levels) {
 			part1 += 1
 			part2 += 1
@@ -32,9 +28,7 @@ func Solve() (int, int) {
 			}
 		}
 	}
-
-	fmt.Println(part1)
-	fmt.Println(part2)
+	timer.Parts(part1, part2)
 
 	return part1, part2
 }

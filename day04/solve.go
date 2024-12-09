@@ -1,13 +1,11 @@
 package day04
 
 import (
-	"fmt"
-
 	"misode.dev/aoc-2024/utils"
 )
 
 func Solve() (int, int) {
-	fmt.Println("=== Day 04 ===")
+	timer := utils.StartDay(4)
 
 	lines := utils.ReadInput("in.txt")
 	G := utils.MakeGrid(lines)
@@ -27,7 +25,7 @@ func Solve() (int, int) {
 			part1 += 1
 		}
 	})
-	fmt.Println(part1)
+	timer.Part1(part1)
 
 	part2 := 0
 	G.ForEach(func(r int, c int, _ rune) {
@@ -35,7 +33,7 @@ func Solve() (int, int) {
 			part2 += 1
 		}
 	})
-	fmt.Println(part2)
+	timer.Part2(part2)
 
 	return part1, part2
 }
