@@ -82,22 +82,6 @@ func (grid *Grid[T]) Is(r int, c int, check T) bool {
 	return grid.IsInside(r, c) && (*grid)[r][c] == check
 }
 
-func (grid *Grid[T]) Mark(r int, c int, set T) bool {
-	if grid.IsInside(r, c) {
-		(*grid)[r][c] = set
-		return true
-	}
-	return false
-}
-
-func (grid *Grid[T]) Get(r int, c int) (T, bool) {
-	if grid.IsInside(r, c) {
-		return (*grid)[r][c], true
-	}
-	var zero T
-	return zero, false
-}
-
 func (grid *Grid[T]) Find(check T) (int, int, bool) {
 	for r, row := range *grid {
 		for c, val := range row {

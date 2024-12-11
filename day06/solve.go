@@ -22,7 +22,7 @@ func Solve() (int, int) {
 			continue
 		}
 		grid := utils.MakeGrid(lines)
-		grid.Mark(point.r, point.c, '#')
+		grid[point.r][point.c] = '#'
 		_, cycle := Simulate(&grid, guardR, guardC, 0)
 		if cycle {
 			part2 += 1
