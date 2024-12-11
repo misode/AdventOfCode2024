@@ -1,17 +1,19 @@
 package utils
 
-func TopoSort(graph map[int][]int, seq []int) []int {
-	visited := make(map[int]bool)
-	cycleCheck := make(map[int]bool)
-	result := make([]int, 0)
-	input := make(map[int]bool)
+type Graph[T comparable] map[T][]T
+
+func TopoSort[T comparable](graph Graph[T], seq []T) []T {
+	visited := make(map[T]bool)
+	cycleCheck := make(map[T]bool)
+	result := make([]T, 0)
+	input := make(map[T]bool)
 
 	for _, node := range seq {
 		input[node] = true
 	}
 
-	var visit func(node int) bool
-	visit = func(node int) bool {
+	var visit func(node T) bool
+	visit = func(node T) bool {
 		if cycleCheck[node] {
 			return false
 		}
