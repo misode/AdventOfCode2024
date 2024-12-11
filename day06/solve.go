@@ -12,7 +12,7 @@ func Solve() (int, int) {
 
 	guardR, guardC, _ := grid.Find('^')
 
-	path, _ := Simulate(grid, guardR, guardC, 0)
+	path, _ := Simulate(&grid, guardR, guardC, 0)
 	part1 := len(path)
 	timer.Part1(part1)
 
@@ -23,7 +23,7 @@ func Solve() (int, int) {
 		}
 		grid := utils.MakeGrid(lines)
 		grid.Mark(point.r, point.c, '#')
-		_, cycle := Simulate(grid, guardR, guardC, 0)
+		_, cycle := Simulate(&grid, guardR, guardC, 0)
 		if cycle {
 			part2 += 1
 		}
@@ -44,7 +44,7 @@ type PointDir struct {
 	dir int
 }
 
-func Simulate(grid utils.Grid, r int, c int, dir int) (map[Point]bool, bool) {
+func Simulate(grid *utils.Grid[rune], r int, c int, dir int) (map[Point]bool, bool) {
 	path := make(map[Point]bool)
 	trail := make(map[PointDir]bool)
 
