@@ -5,83 +5,81 @@ import (
 	"strings"
 )
 
-type Grid struct {
-	data [][]rune
-}
+type Grid [][]rune
 
 func MakeGrid(lines []string) Grid {
-	data := make([][]rune, len(lines))
+	grid := make([][]rune, len(lines))
 	for i, line := range lines {
-		data[i] = []rune(line)
+		grid[i] = []rune(line)
 	}
-	return Grid{data}
+	return grid
 }
 
-func (g *Grid) Height() int {
-	return len(g.data)
+func (grid *Grid) Height() int {
+	return len(*grid)
 }
 
-func (g *Grid) Width() int {
-	return len(g.data[0])
+func (grid *Grid) Width() int {
+	return len((*grid)[0])
 }
 
-func (g *Grid) Transpose() Grid {
-	data := make([][]rune, g.Width())
-	for i := range data {
-		data[i] = make([]rune, g.Height())
+func (grid *Grid) Transpose() Grid {
+	newGrid := make([][]rune, grid.Width())
+	for i := range newGrid {
+		newGrid[i] = make([]rune, grid.Height())
 	}
-	for r, row := range g.data {
+	for r, row := range *grid {
 		for c, val := range row {
-			data[c][r] = val
+			newGrid[c][r] = val
 		}
 	}
-	return Grid{data}
+	return newGrid
 }
 
-func (g *Grid) ToLines() []string {
-	lines := make([]string, g.Height())
-	for i, row := range g.data {
+func (grid *Grid) ToLines() []string {
+	lines := make([]string, grid.Height())
+	for i, row := range *grid {
 		lines[i] = string(row)
 	}
 	return lines
 }
 
-func (g *Grid) Print() {
-	lines := g.ToLines()
+func (grid *Grid) Print() {
+	lines := grid.ToLines()
 	for _, line := range lines {
 		fmt.Println(line)
 	}
 }
 
-func (g *Grid) IsInside(r int, c int) bool {
-	return r >= 0 && c >= 0 && r < g.Height() && c < g.Width()
+func (grid *Grid) IsInside(r int, c int) bool {
+	return r >= 0 && c >= 0 && r < grid.Height() && c < grid.Width()
 }
 
-func (g *Grid) Is(r int, c int, check rune) bool {
-	return g.IsInside(r, c) && g.data[r][c] == check
+func (grid *Grid) Is(r int, c int, check rune) bool {
+	return grid.IsInside(r, c) && (*grid)[r][c] == check
 }
 
-func (g *Grid) Mark(r int, c int, set rune) bool {
-	if g.IsInside(r, c) {
-		g.data[r][c] = set
+func (grid *Grid) Mark(r int, c int, set rune) bool {
+	if grid.IsInside(r, c) {
+		(*grid)[r][c] = set
 		return true
 	}
 	return false
 }
 
-func (g *Grid) Get(r int, c int) (rune, bool) {
-	if g.IsInside(r, c) {
-		return g.data[r][c], true
+func (grid *Grid) Get(r int, c int) (rune, bool) {
+	if grid.IsInside(r, c) {
+		return (*grid)[r][c], true
 	}
 	return rune(0), false
 }
 
-func (g *Grid) Match(r int, c int, search string) bool {
+func (grid *Grid) Match(r int, c int, search string) bool {
 	subgrid := MakeGrid(strings.Split(search, ","))
 
 	for dr := 0; dr < subgrid.Height(); dr++ {
 		for dc := 0; dc < subgrid.Width(); dc++ {
-			if !subgrid.Is(dr, dc, ' ') && !g.Is(r+dr, c+dc, subgrid.data[dr][dc]) {
+			if !subgrid.Is(dr, dc, ' ') && !grid.Is(r+dr, c+dc, subgrid[dr][dc]) {
 				return false
 			}
 		}
@@ -89,12 +87,12 @@ func (g *Grid) Match(r int, c int, search string) bool {
 	return true
 }
 
-func (g *Grid) MatchSym(r int, c int, search string) bool {
-	return g.Match(r, c, search) || g.Match(r, c, ReverseStr(search))
+func (grid *Grid) MatchSym(r int, c int, search string) bool {
+	return grid.Match(r, c, search) || grid.Match(r, c, ReverseStr(search))
 }
 
-func (g *Grid) Find(check rune) (int, int, bool) {
-	for r, row := range g.data {
+func (grid *Grid) Find(check rune) (int, int, bool) {
+	for r, row := range *grid {
 		for c, val := range row {
 			if val == check {
 				return r, c, true
@@ -104,8 +102,8 @@ func (g *Grid) Find(check rune) (int, int, bool) {
 	return 0, 0, false
 }
 
-func (g *Grid) ForEach(fn func(r int, c int, val rune)) {
-	for r, row := range g.data {
+func (grid *Grid) ForEach(fn func(r int, c int, val rune)) {
+	for r, row := range *grid {
 		for c, val := range row {
 			fn(r, c, val)
 		}
