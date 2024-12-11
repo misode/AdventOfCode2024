@@ -73,14 +73,14 @@ func (t *DayTimer) Part1(val any) {
 	now := time.Now()
 	diff := now.Sub(t.getPrev())
 	t.part1 = &now
-	fmt.Printf(" %v\t\t(%v)\n", val, diff)
+	fmt.Printf(" %-16v  (%v)\n", val, diff)
 }
 
 func (t *DayTimer) Part2(val any) {
 	now := time.Now()
 	diff := now.Sub(t.getPrev())
 	t.part2 = &now
-	fmt.Printf(" %v\t\t(%v)\n", val, diff)
+	fmt.Printf(" %-16v  (%v)\n", val, diff)
 }
 
 func (t *DayTimer) Parts(val1 any, val2 any) {
@@ -88,8 +88,8 @@ func (t *DayTimer) Parts(val1 any, val2 any) {
 	diff := now.Sub(t.getPrev())
 	t.part1 = &now
 	t.part2 = &now
-	fmt.Printf(" %v\n", val1)
-	fmt.Printf(" %v\t\t(%v)\n", val2, diff)
+	fmt.Printf(" %-16v\n", val1)
+	fmt.Printf(" %-16v  (%v)\n", val2, diff)
 }
 
 func SplitLinesOnEmpty(lines []string) [][]string {
