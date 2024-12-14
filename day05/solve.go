@@ -12,8 +12,8 @@ func Solve() (int, int) {
 
 	graph := make(map[int][]int)
 	for _, line := range groups[0] {
-		nums := utils.SplitInts(line, "|")
-		graph[nums[0]] = append(graph[nums[0]], nums[1])
+		a, b := utils.SplitInts2(line, "|")
+		graph[a] = append(graph[a], b)
 	}
 
 	updates := make([][]int, 0)
