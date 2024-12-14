@@ -125,6 +125,20 @@ func SplitInts(source string, sep string) []int {
 	return ints[:i]
 }
 
+func SplitInts2(source string, sep string) (int, int) {
+	parts := strings.Split(source, sep)
+	ints := make([]int, len(parts))
+	i := 0
+	for _, part := range parts {
+		num, err := strconv.Atoi(part)
+		if err == nil {
+			ints[i] = num
+			i += 1
+		}
+	}
+	return ints[0], ints[1]
+}
+
 func Counter[K comparable](values []K) map[K]int {
 	counts := make(map[K]int)
 	for _, val := range values {
@@ -178,4 +192,15 @@ func ForCombinations[T any](list []T, fn func(a T, b T)) {
 			fn(list[i], list[j])
 		}
 	}
+}
+
+func Mod(a int, b int) int {
+	return (a%b + b) % b
+}
+
+func Abs(a int) int {
+	if a < -1 {
+		return -1 * a
+	}
+	return a
 }
