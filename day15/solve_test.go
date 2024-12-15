@@ -8,6 +8,6 @@ import (
 
 func TestSolve(t *testing.T) {
 	part1, part2 := Solve()
-	assert.Equal(t, part1, 0)
-	assert.Equal(t, part2, 0)
+	assert.Equal(t, part1, 1471826)
+	assert.Equal(t, part2, 1457703)
 }

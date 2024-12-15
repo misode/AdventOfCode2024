@@ -1,11 +1,14 @@
 package day15
 
 import (
+	"maps"
 	"slices"
 	"strings"
 
 	"misode.dev/aoc-2024/utils"
 )
+
+var DIRS = map[rune]Point{'^': {-1, 0}, '>': {0, 1}, 'v': {1, 0}, '<': {0, -1}}
 
 func Solve() (int, int) {
 	timer := utils.StartDay(15)
@@ -14,12 +17,10 @@ func Solve() (int, int) {
 	groups := utils.SplitLinesOnEmpty(lines)
 	grid := utils.MakeGrid(groups[0])
 	path := strings.Join(groups[1], "")
-
 	pr, pc, _ := grid.Find('@')
 
-	dirs := map[rune]Point{'^': {-1, 0}, '>': {0, 1}, 'v': {1, 0}, '<': {0, -1}}
 	for _, instr := range path {
-		dir := dirs[instr]
+		dir := DIRS[instr]
 		tr, tc := pr+dir.r, pc+dir.c
 		for grid.Is(tr, tc, 'O') {
 			tr += dir.r
@@ -44,80 +45,54 @@ func Solve() (int, int) {
 
 	wider := make([]string, len(groups[0]))
 	for i, line := range groups[0] {
-		wide := strings.Builder{}
-		for _, char := range line {
-			if char == '#' {
-				wide.WriteString("##")
-			} else if char == 'O' {
-				wide.WriteString("[]")
-			} else if char == '.' {
-				wide.WriteString("..")
-			} else if char == '@' {
-				wide.WriteString("@.")
-			}
-		}
-		wider[i] = wide.String()
+		line = strings.ReplaceAll(line, "#", "##")
+		line = strings.ReplaceAll(line, "O", "[]")
+		line = strings.ReplaceAll(line, ".", "..")
+		line = strings.ReplaceAll(line, "@", "@.")
+		wider[i] = line
 	}
 	grid = utils.MakeGrid(wider)
 	pr, pc, _ = grid.Find('@')
 
 	for _, instr := range path {
-		dir := dirs[instr]
+		dir := DIRS[instr]
 		push := map[Point]bool{{pr, pc}: true}
-		pushes := map[Point]bool{}
-		stop := false
-		for {
+		moves := map[Point]bool{}
+		wall := false
+		for !wall && len(push) > 0 {
 			nextPush := make(map[Point]bool)
 			for p := range push {
 				if grid.Is(p.r, p.c, '#') {
-					stop = true
+					wall = true
 					break
 				}
 				tr, tc := p.r+dir.r, p.c+dir.c
-				pushes[Point{tr, tc}] = true
-				if grid.Is(tr, tc, '[') {
-					if dir.c == 0 {
-						pushes[Point{tr, tc + 1}] = true
-						nextPush[Point{tr, tc}] = true
-						nextPush[Point{tr, tc + 1}] = true
-					} else {
-						pushes[Point{tr, tc + dir.c}] = true
-						nextPush[Point{tr, tc + dir.c}] = true
-					}
-				} else if grid.Is(tr, tc, ']') {
-					if dir.c == 0 {
-						pushes[Point{tr, tc - 1}] = true
-						nextPush[Point{tr, tc}] = true
-						nextPush[Point{tr, tc - 1}] = true
-					} else {
-						pushes[Point{tr, tc + dir.c}] = true
-						nextPush[Point{tr, tc + dir.c}] = true
-					}
-				} else if grid.Is(tr, tc, '#') {
+				if grid.Is(tr, tc, '.') {
+					continue
+				}
+				moves[Point{tr, tc}] = true
+				if dir.r != 0 { // Up or down
 					nextPush[Point{tr, tc}] = true
-					stop = true
-				} else {
-					delete(pushes, Point{tr, tc})
+					if grid.Is(tr, tc, '[') {
+						nextPush[Point{tr, tc + 1}] = true
+						moves[Point{tr, tc + 1}] = true
+					} else {
+						nextPush[Point{tr, tc - 1}] = true
+						moves[Point{tr, tc - 1}] = true
+					}
+				} else { // Left or right
+					moves[Point{tr, tc + dir.c}] = true
+					nextPush[Point{tr, tc + dir.c}] = true
 				}
 			}
 			push = nextPush
-			if stop || len(push) == 0 {
-				break
-			}
 		}
-		if !stop && len(push) == 0 {
-			ordered := make([]Point, 0)
-			for p := range pushes {
-				ordered = append(ordered, p)
-			}
-			slices.SortStableFunc(ordered, func(a, b Point) int {
-				if dir.r == 0 {
-					return (b.c - a.c) * dir.c
-				} else {
-					return (b.r - a.r) * dir.r
-				}
+		if !wall {
+			orderedMoves := slices.Collect(maps.Keys(moves))
+			slices.SortFunc(orderedMoves, func(a, b Point) int {
+				return (b.c-a.c)*dir.c + (b.r-a.r)*dir.r
 			})
-			for _, p := range ordered {
+			for _, p := range orderedMoves {
 				grid[p.r+dir.r][p.c+dir.c] = grid[p.r][p.c]
 				grid[p.r][p.c] = '.'
 			}
