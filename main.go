@@ -16,6 +16,7 @@ import (
 	"misode.dev/aoc-2024/day13"
 	"misode.dev/aoc-2024/day14"
 	"misode.dev/aoc-2024/day15"
+	"misode.dev/aoc-2024/day16"
 )
 
 func main() {
@@ -34,4 +35,5 @@ func main() {
 	day13.Solve()
 	day14.Solve()
 	day15.Solve()
+	day16.Solve()
 }
