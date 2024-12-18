@@ -139,6 +139,14 @@ func SplitInts2(source string, sep string) (int, int) {
 	return ints[0], ints[1]
 }
 
+func JoinInts(nums []int, sep string) string {
+	strs := make([]string, len(nums))
+	for i, v := range nums {
+		strs[i] = strconv.Itoa(v)
+	}
+	return strings.Join(strs, sep)
+}
+
 func Counter[K comparable](values []K) map[K]int {
 	counts := make(map[K]int)
 	for _, val := range values {
