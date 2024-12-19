@@ -1,6 +1,8 @@
 package main
 
 import (
+	"flag"
+
 	"misode.dev/aoc-2024/day01"
 	"misode.dev/aoc-2024/day02"
 	"misode.dev/aoc-2024/day03"
@@ -22,24 +24,35 @@ import (
 	"misode.dev/aoc-2024/day19"
 )
 
+var DAYS = []func(){
+	func() { day01.Solve() },
+	func() { day02.Solve() },
+	func() { day03.Solve() },
+	func() { day04.Solve() },
+	func() { day05.Solve() },
+	func() { day06.Solve() },
+	func() { day07.Solve() },
+	func() { day08.Solve() },
+	func() { day09.Solve() },
+	func() { day10.Solve() },
+	func() { day11.Solve() },
+	func() { day12.Solve() },
+	func() { day13.Solve() },
+	func() { day14.Solve() },
+	func() { day15.Solve() },
+	func() { day16.Solve() },
+	func() { day17.Solve() },
+	func() { day18.Solve() },
+	func() { day19.Solve() },
+}
+
 func main() {
-	day01.Solve()
-	day02.Solve()
-	day03.Solve()
-	day04.Solve()
-	day05.Solve()
-	day06.Solve()
-	day07.Solve()
-	day08.Solve()
-	day09.Solve()
-	day10.Solve()
-	day11.Solve()
-	day12.Solve()
-	day13.Solve()
-	day14.Solve()
-	day15.Solve()
-	day16.Solve()
-	day17.Solve()
-	day18.Solve()
-	day19.Solve()
+	day := flag.Int("day", 0, "The day to solve")
+	flag.Parse()
+
+	for i, solver := range DAYS {
+		if *day == 0 || *day-1 == i {
+			solver()
+		}
+	}
 }
