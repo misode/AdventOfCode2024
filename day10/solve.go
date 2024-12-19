@@ -5,7 +5,7 @@ import (
 )
 
 func Solve() (int, int) {
-	timer := utils.StartDay(10)
+	timer := utils.StartTimer()
 
 	lines := utils.ReadInput("in.txt")
 	grid := utils.MakeIntGrid(lines)

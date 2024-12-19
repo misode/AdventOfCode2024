@@ -7,7 +7,7 @@ import (
 )
 
 func Solve() (string, int) {
-	timer := utils.StartDay(17)
+	timer := utils.StartTimer()
 
 	lines := utils.ReadInput("in.txt")
 	groups := utils.SplitLinesOnEmpty(lines)
@@ -51,10 +51,10 @@ func Solve() (string, int) {
 		}
 	}
 	part1 := utils.JoinInts(out, ",")
-	timer.Part1(part1)
+	timer.Part(part1)
 
 	part2 := 0
-	timer.Part2(part2)
+	timer.Part(part2)
 
 	return part1, part2
 }

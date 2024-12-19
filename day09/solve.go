@@ -7,7 +7,7 @@ import (
 )
 
 func Solve() (int, int) {
-	timer := utils.StartDay(9)
+	timer := utils.StartTimer()
 
 	lines := utils.ReadInput("in.txt")
 
@@ -38,7 +38,7 @@ func Solve() (int, int) {
 	}
 
 	part1 := ComputeChecksum(disk)
-	timer.Part1(part1)
+	timer.Part(part1)
 
 	copy(disk, orig)
 	for i := len(disk) - 1; i > 0; i-- {
@@ -70,7 +70,7 @@ func Solve() (int, int) {
 	}
 
 	part2 := ComputeChecksum(disk)
-	timer.Part2(part2)
+	timer.Part(part2)
 
 	return part1, part2
 }

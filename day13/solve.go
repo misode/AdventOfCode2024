@@ -7,7 +7,7 @@ import (
 )
 
 func Solve() (int, int) {
-	timer := utils.StartDay(13)
+	timer := utils.StartTimer()
 
 	lines := utils.ReadInput("in.txt")
 	groups := utils.SplitLinesOnEmpty(lines)
@@ -26,7 +26,7 @@ func Solve() (int, int) {
 			}
 		}
 	}
-	timer.Part1(part1)
+	timer.Part(part1)
 
 	part2 := 0
 	for _, group := range groups {
@@ -54,7 +54,7 @@ func Solve() (int, int) {
 			part2 += 3*n + m
 		}
 	}
-	timer.Part2(part2)
+	timer.Part(part2)
 
 	return part1, part2
 }

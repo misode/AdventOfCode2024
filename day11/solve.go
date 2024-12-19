@@ -7,16 +7,16 @@ import (
 )
 
 func Solve() (int, int) {
-	timer := utils.StartDay(11)
+	timer := utils.StartTimer()
 
 	lines := utils.ReadInput("in.txt")
 	ints := utils.SplitInts(lines[0], " ")
 	stones := utils.Counter(ints)
 
 	part1 := simulate(stones, 25)
-	timer.Part1(part1)
+	timer.Part(part1)
 	part2 := simulate(stones, 75)
-	timer.Part2(part2)
+	timer.Part(part2)
 
 	return part1, part2
 }

@@ -8,7 +8,7 @@ import (
 )
 
 func Solve() (int, int) {
-	timer := utils.StartDay(7)
+	timer := utils.StartTimer()
 
 	lines := utils.ReadInput("in.txt")
 

@@ -7,7 +7,7 @@ import (
 )
 
 func Solve() (int, int) {
-	timer := utils.StartDay(4)
+	timer := utils.StartTimer()
 
 	lines := utils.ReadInput("in.txt")
 	grid := utils.MakeGrid(lines)
@@ -27,7 +27,7 @@ func Solve() (int, int) {
 			part1 += 1
 		}
 	})
-	timer.Part1(part1)
+	timer.Part(part1)
 
 	part2 := 0
 	grid.ForEach(func(r int, c int, _ rune) {
@@ -35,7 +35,7 @@ func Solve() (int, int) {
 			part2 += 1
 		}
 	})
-	timer.Part2(part2)
+	timer.Part(part2)
 
 	return part1, part2
 }

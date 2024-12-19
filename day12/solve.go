@@ -5,16 +5,16 @@ import (
 )
 
 func Solve() (int, int) {
-	timer := utils.StartDay(12)
+	timer := utils.StartTimer()
 
 	lines := utils.ReadInput("in.txt")
 	grid := utils.MakeGrid(lines)
 
 	part1 := CalculatePrice(&grid, false)
-	timer.Part1(part1)
+	timer.Part(part1)
 
 	part2 := CalculatePrice(&grid, true)
-	timer.Part2(part2)
+	timer.Part(part2)
 
 	return part1, part2
 }

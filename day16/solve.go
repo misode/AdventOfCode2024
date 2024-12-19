@@ -7,7 +7,7 @@ import (
 var DIRS = []Point{{-1, 0}, {0, 1}, {1, 0}, {0, -1}}
 
 func Solve() (int, int) {
-	timer := utils.StartDay(16)
+	timer := utils.StartTimer()
 
 	lines := utils.ReadInput("in.txt")
 	grid := utils.MakeGrid(lines)

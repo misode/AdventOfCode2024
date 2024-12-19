@@ -37,57 +37,33 @@ func ReadInput(name string) []string {
 	return lines
 }
 
-type DayTimer struct {
-	start *time.Time
-	parse *time.Time
-	part1 *time.Time
-	part2 *time.Time
+type Timer struct {
+	prev *time.Time
 }
 
-func (t *DayTimer) getPrev() time.Time {
-	if t.part2 != nil {
-		return *t.part2
-	} else if t.part1 != nil {
-		return *t.part1
-	} else if t.parse != nil {
-		return *t.parse
-	} else if t.start != nil {
-		return *t.start
-	} else {
-		return time.Now()
-	}
-}
-
-func StartDay(day int) DayTimer {
-	fmt.Printf("=== Day %02d ===\n", day)
+func StartTimer() Timer {
 	now := time.Now()
-	return DayTimer{start: &now, parse: nil, part1: nil, part2: nil}
+	return Timer{&now}
 }
 
-func (t *DayTimer) Parsed() {
+func (t *Timer) Diff() time.Duration {
 	now := time.Now()
-	t.parse = &now
+	diff := now.Sub(*t.prev)
+	t.prev = &now
+	return diff
 }
 
-func (t *DayTimer) Part1(val any) {
-	now := time.Now()
-	diff := now.Sub(t.getPrev())
-	t.part1 = &now
+func (t *Timer) Parsed() {
+	t.Diff()
+}
+
+func (t *Timer) Part(val any) {
+	diff := t.Diff()
 	fmt.Printf(" %-16v  (%v)\n", val, diff)
 }
 
-func (t *DayTimer) Part2(val any) {
-	now := time.Now()
-	diff := now.Sub(t.getPrev())
-	t.part2 = &now
-	fmt.Printf(" %-16v  (%v)\n", val, diff)
-}
-
-func (t *DayTimer) Parts(val1 any, val2 any) {
-	now := time.Now()
-	diff := now.Sub(t.getPrev())
-	t.part1 = &now
-	t.part2 = &now
+func (t *Timer) Parts(val1 any, val2 any) {
+	diff := t.Diff()
 	fmt.Printf(" %-16v\n", val1)
 	fmt.Printf(" %-16v  (%v)\n", val2, diff)
 }

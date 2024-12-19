@@ -11,7 +11,7 @@ import (
 var DIRS = map[rune]Point{'^': {-1, 0}, '>': {0, 1}, 'v': {1, 0}, '<': {0, -1}}
 
 func Solve() (int, int) {
-	timer := utils.StartDay(15)
+	timer := utils.StartTimer()
 
 	lines := utils.ReadInput("in.txt")
 	groups := utils.SplitLinesOnEmpty(lines)
@@ -41,7 +41,7 @@ func Solve() (int, int) {
 			part1 += 100*r + c
 		}
 	})
-	timer.Part1(part1)
+	timer.Part(part1)
 
 	wider := make([]string, len(groups[0]))
 	for i, line := range groups[0] {
@@ -109,7 +109,7 @@ func Solve() (int, int) {
 			part2 += 100*r + c
 		}
 	})
-	timer.Part2(part2)
+	timer.Part(part2)
 
 	return part1, part2
 }

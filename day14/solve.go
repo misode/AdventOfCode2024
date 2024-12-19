@@ -7,7 +7,7 @@ import (
 )
 
 func Solve() (int, int) {
-	timer := utils.StartDay(14)
+	timer := utils.StartTimer()
 
 	lines := utils.ReadInput("in.txt")
 
@@ -35,7 +35,7 @@ func Solve() (int, int) {
 		}
 	}
 	part1 := q1 * q2 * q3 * q4
-	timer.Part1(part1)
+	timer.Part(part1)
 
 	part2 := 0
 	for {
@@ -57,7 +57,7 @@ func Solve() (int, int) {
 			break
 		}
 	}
-	timer.Part2(part2)
+	timer.Part(part2)
 
 	return part1, part2
 }

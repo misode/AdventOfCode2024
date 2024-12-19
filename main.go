@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 
 	"misode.dev/aoc-2024/day01"
 	"misode.dev/aoc-2024/day02"
@@ -22,6 +23,7 @@ import (
 	"misode.dev/aoc-2024/day17"
 	"misode.dev/aoc-2024/day18"
 	"misode.dev/aoc-2024/day19"
+	"misode.dev/aoc-2024/utils"
 )
 
 var DAYS = []func(){
@@ -50,9 +52,12 @@ func main() {
 	day := flag.Int("day", 0, "The day to solve")
 	flag.Parse()
 
+	timer := utils.StartTimer()
 	for i, solver := range DAYS {
 		if *day == 0 || *day-1 == i {
+			fmt.Printf("=== Day %02d ===\n", i+1)
 			solver()
 		}
 	}
+	fmt.Printf("=== Total %v ===\n", timer.Diff())
 }

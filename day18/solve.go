@@ -7,7 +7,7 @@ import (
 )
 
 func Solve() (int, string) {
-	timer := utils.StartDay(18)
+	timer := utils.StartTimer()
 
 	lines := utils.ReadInput("in.txt")
 	points := make([]Point, len(lines))
@@ -28,7 +28,7 @@ func Solve() (int, string) {
 		}
 	}
 	part1, _ := solve(&grid)
-	timer.Part1(part1)
+	timer.Part(part1)
 
 	part2 := ""
 	for i := range S {
@@ -42,7 +42,7 @@ func Solve() (int, string) {
 			break
 		}
 	}
-	timer.Part2(part2)
+	timer.Part(part2)
 
 	return part1, part2
 }
